@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 161456567668146449}
   - component: {fileID: 161456567668146454}
   m_Layer: 0
-  m_Name: Driver Pin
-  m_TagString: Driver Pin
+  m_Name: Key Pin
+  m_TagString: Key Pin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,8 +107,8 @@ GameObject:
   - component: {fileID: 161456568240583895}
   - component: {fileID: 161456568240583892}
   m_Layer: 0
-  m_Name: Key Pin
-  m_TagString: Key Pin
+  m_Name: Driver Pin
+  m_TagString: Driver Pin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,7 +153,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b7f70d23ebeb07948a56eb18dfd48cfb, type: 2}
+  - {fileID: 2100000, guid: 46942e7ff881c4d4ca139892f7a02acc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -313,3 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431e6f2ef96ed0645b63adac5fcc9a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  max_height: 7
+  key_pin_height: 2
+  driver_pin_height: 2
+  spring_height: 3
