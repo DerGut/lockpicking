@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class LockConfiguration
 {
@@ -12,7 +14,7 @@ public class LockConfiguration
     {
         if (bindingOrder.Length != pinConfigurations.Length)
         {
-            throw new Exception("bindingOrder needs to have as many elements as pinConfigurations do");
+            throw new System.Exception("bindingOrder needs to have as many elements as pinConfigurations do");
         }
 
         this.pinNumber = bindingOrder.Length;
@@ -22,15 +24,21 @@ public class LockConfiguration
 
     public static LockConfiguration Random()
     {
-        int[] bindingOrder = new int[DEFAULT_PIN_NUMBER];
         PinConfiguration[] pinConfigurations = new PinConfiguration[DEFAULT_PIN_NUMBER];
         for (int i = 0; i < DEFAULT_PIN_NUMBER; i++)
         {
-            bindingOrder[i] = UnityEngine.Random.Range(0, DEFAULT_PIN_NUMBER);
             pinConfigurations[i] = PinConfiguration.Random();
         }
-
+        int[] bindingOrder = GenerateRandomBindingOrder();
         return new LockConfiguration(bindingOrder, pinConfigurations);
+    }
+
+    private static int[] GenerateRandomBindingOrder()
+    {
+        Random rand = new Random();
+        IEnumerable<int> indices = Enumerable.Range(0, DEFAULT_PIN_NUMBER);
+
+        return indices.OrderBy(i => rand.Next()).ToArray();
     }
 
     override public string ToString()

@@ -6,22 +6,22 @@ public class Lock : MonoBehaviour
     [SerializeField] private GameObject pinPrefab;
     [SerializeField] private float pinOffset = 1.5f;
 
-    [Range(0, LockConfiguration.DEFAULT_PIN_NUMBER)]
+    [Range(0, LockConfiguration.DEFAULT_PIN_NUMBER - 1)]
     [SerializeField]
-    private int pickIndex; // 0-5
+    private int pickIndex;
 
-    [Range(0, 1)]
+    [Range(0, Pin.SPRING_TRAVEL)]
     [SerializeField]
-    private float pickDepth; // 0-1
+    private float pickDepth;
 
     private LockConfiguration lockConfiguration;
     private List<Pin> pins;
-    private int numBound = 0;
+    private int numLocked = 0;
 
-    protected void Awake()
+    protected void Start()
     {
         lockConfiguration = LockConfiguration.Random();
-        Debug.Log("Using LockConfiguration: " + lockConfiguration);
+        Debug.Log("Using LockConfiguration: " + lockConfiguration.ToString());
 
         pins = InitPins();
     }
@@ -41,10 +41,12 @@ public class Lock : MonoBehaviour
         {
             Vector3 position = new Vector3(i * pinOffset, 0, 0);
             GameObject pinObj = Instantiate(pinPrefab, position, pinPrefab.transform.rotation);
-            PinConfiguration pinCfg = lockConfiguration.pinConfigurations[i];
+            pinObj.name = "Pin " + i;
 
             Pin pin = pinObj.GetComponent<Pin>();
+            PinConfiguration pinCfg = lockConfiguration.pinConfigurations[i];
             pin.Init(pinCfg);
+
             pins.Add(pin);
         }
 
@@ -68,10 +70,18 @@ public class Lock : MonoBehaviour
 
     private void UpdateBindings()
     {
+        if (numLocked == pins.Count)
+        {
+            return;
+        }
         for (int i = 0; i < pins.Count; i++)
         {
-            if (i == lockConfiguration.bindingOrder[numBound])
+            if (i == lockConfiguration.bindingOrder[numLocked])
             {
+                if (!pins[i].isBinding)
+                {
+                    Debug.Log($"Pin #{i} is binding");
+                }
                 pins[i].isBinding = true;
             }
             else
@@ -83,12 +93,22 @@ public class Lock : MonoBehaviour
 
     private void UpdateLockings()
     {
-        Pin currentPin = pins[pickIndex];
-
-        bool isLocking = currentPin.IsLocking(pickDepth);
-        if (currentPin.isBinding && isLocking)
+        if (pins[pickIndex].IsLocking(pickDepth))
         {
-            currentPin.isLocked = true;
+            if (!pins[pickIndex].isLocked)
+            {
+                Debug.Log($"Pin #{pickIndex} is locked");
+            }
+            pins[pickIndex].isLocked = true;
+            if (++numLocked == pins.Count)
+            {
+                Unlock();
+            }
         }
+    }
+
+    private void Unlock()
+    {
+        Debug.Log("Congratulations!");
     }
 }
