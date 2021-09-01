@@ -5,6 +5,12 @@ public class Lock : MonoBehaviour
 {
     public const float PIN_OFFSET = 1.5f;
 
+    [HideInInspector]
+    public int PinCount
+    {
+        get => pins.Count;
+    }
+
     [SerializeField] private GameObject pinPrefab;
 
     [Range(0, LockConfiguration.DEFAULT_PIN_NUMBER - 1)]
