@@ -4,8 +4,8 @@
 public class Pin : MonoBehaviour
 {
     public const float EXTENDED_SPRING_HEIGHT = PinConfiguration.SPRING_HEIGHT;
-    public const float COMPRESSED_SPRING_HEIGHT = 0;
-    private const float BOTTOM_HEIGHT = -2.0f;
+    public const float COMPRESSED_SPRING_HEIGHT = 0.1f;
+    public const float BOTTOM_HEIGHT = -2.0f;
 
     public const float SPRING_TRAVEL = EXTENDED_SPRING_HEIGHT - COMPRESSED_SPRING_HEIGHT;
     public const float LOCKING_PRECISION = 0.1f;
@@ -51,7 +51,7 @@ public class Pin : MonoBehaviour
 
         if (isLocked && pickDepth < keyPinHeight)
         {
-            // If locked, let the pin be stuck at the shear line
+            // If locked, leave the pin stuck at the shear line
             springHeight = EXTENDED_SPRING_HEIGHT - keyPinHeight;
         }
         else
@@ -80,7 +80,7 @@ public class Pin : MonoBehaviour
         float currentHeight = gameObject.GetComponent<Renderer>().bounds.size.y;
         Vector3 scale = gameObject.transform.localScale;
         scale.y *= height / currentHeight;
-        keyPin.transform.localScale = scale;
+        gameObject.transform.localScale = scale;
     }
 
     private void PositionVertically(GameObject gameObject, float height)

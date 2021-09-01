@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 public class LockConfiguration
 {
@@ -43,6 +44,23 @@ public class LockConfiguration
 
     override public string ToString()
     {
-        return $"{{pinNumber: {pinNumber}, bindingOrder: {bindingOrder}, pinConfigurations: {pinConfigurations}}}";
+        StringBuilder sb = new StringBuilder();
+        sb.Append("{");
+        sb.Append($"pinNumber: {pinNumber}");
+        sb.Append(", bindingOrder: [");
+        for (int i = 0; i < bindingOrder.Length; i++)
+        {
+            sb.Append($"{bindingOrder[i]},");
+        }
+        sb.Append("]");
+        sb.Append(", pinConfigurations: [");
+        for (int i = 0; i < pinConfigurations.Length; i++)
+        {
+            sb.Append($"{pinConfigurations[i]},");
+        }
+        sb.Append("]");
+        sb.Append("}");
+
+        return sb.ToString();
     }
 }

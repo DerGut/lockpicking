@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Lock : MonoBehaviour
 {
+    public const float PIN_OFFSET = 1.5f;
+
     [SerializeField] private GameObject pinPrefab;
-    [SerializeField] private float pinOffset = 1.5f;
 
     [Range(0, LockConfiguration.DEFAULT_PIN_NUMBER - 1)]
     [SerializeField]
@@ -18,7 +19,7 @@ public class Lock : MonoBehaviour
     private List<Pin> pins;
     private int numLocked = 0;
 
-    protected void Start()
+    protected void Awake()
     {
         lockConfiguration = LockConfiguration.Random();
         Debug.Log("Using LockConfiguration: " + lockConfiguration.ToString());
@@ -39,9 +40,10 @@ public class Lock : MonoBehaviour
 
         for (int i = 0; i < lockConfiguration.pinNumber; i++)
         {
-            Vector3 position = new Vector3(i * pinOffset, 0, 0);
+            Vector3 position = new Vector3(i * PIN_OFFSET, 0, 0);
             GameObject pinObj = Instantiate(pinPrefab, position, pinPrefab.transform.rotation);
             pinObj.name = "Pin " + i;
+            pinObj.transform.parent = transform;
 
             Pin pin = pinObj.GetComponent<Pin>();
             PinConfiguration pinCfg = lockConfiguration.pinConfigurations[i];
