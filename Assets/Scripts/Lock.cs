@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Lock : MonoBehaviour
@@ -13,13 +14,31 @@ public class Lock : MonoBehaviour
 
     [SerializeField] private GameObject pinPrefab;
 
-    [Range(0, LockConfiguration.DEFAULT_PIN_NUMBER - 1)]
-    [SerializeField]
-    private int pickIndex;
+    private int _pickIndex;
+    [HideInInspector]
+    public int PickIndex
+    {
+        get { return _pickIndex; }
+        set
+        {
+            if (value < -1 || value >= pins.Count)
+                throw new ArgumentOutOfRangeException($"PickIndex must be between -1 and {pins.Count - 1}.");
+            _pickIndex = value;
+        }
+    }
 
-    [Range(0, Pin.SPRING_TRAVEL)]
-    [SerializeField]
-    private float pickDepth;
+    private float _pickDepth;
+    [HideInInspector]
+    public float PickDepth
+    {
+        get { return _pickDepth; }
+        set
+        {
+            if (value < 0 || value > Pin.SPRING_TRAVEL)
+                throw new ArgumentOutOfRangeException($"PickDepth must be between 0 and {Pin.SPRING_TRAVEL}.");
+            _pickDepth = value;
+        }
+    }
 
     private LockConfiguration lockConfiguration;
     private List<Pin> pins;
@@ -65,9 +84,9 @@ public class Lock : MonoBehaviour
     {
         for (int i = 0; i < pins.Count; i++)
         {
-            if (i == pickIndex)
+            if (i == PickIndex)
             {
-                pins[i].PushDown(pickDepth);
+                pins[i].PushDown(PickDepth);
             }
             else
             {
@@ -101,13 +120,14 @@ public class Lock : MonoBehaviour
 
     private void UpdateLockings()
     {
-        if (pins[pickIndex].IsLocking(pickDepth))
+        if (PickIndex == -1)
         {
-            if (!pins[pickIndex].isLocked)
-            {
-                Debug.Log($"Pin #{pickIndex} is locked");
-            }
-            pins[pickIndex].isLocked = true;
+            return;
+        }
+        if (pins[PickIndex].IsLocking(PickDepth) && !pins[PickIndex].isLocked)
+        {
+            Debug.Log($"Pin #{PickIndex} is locked");
+            pins[PickIndex].isLocked = true;
             if (++numLocked == pins.Count)
             {
                 Unlock();

@@ -1,17 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class Pick : MonoBehaviour
 {
-    private const float PIN_SWITCH_THRESHOLD = 0.9f;
+    private const float HORIZONTAL_MOVE_THRESHOLD = 0.9f;
+    private const float HORIZONTAL_PAUSE_THRESHOLD = 0.1f;
+
+    /// <summary>Beyond certain depth, the pick is stuck in the pin cylinder and needs to be pulled upwards before moving horizontally to another pin.</summary>
+    private const float IMMOVABLE_DEPTH = 0.7f;
     [SerializeField] private TextMeshProUGUI horizontalAxisText;
     [SerializeField] private TextMeshProUGUI verticalAxisText;
     [SerializeField] private Lock m_lock;
 
     private int pinIndex = -1;
     private float depth = 0.0f;
+    private bool isMovingHorizontally = false;
 
     private float initialVerticalPosition;
 
@@ -35,14 +38,30 @@ public class Pick : MonoBehaviour
 
     private int UpdatePinIndex(float horizontalAxis)
     {
-        if (Mathf.Abs(horizontalAxis) > PIN_SWITCH_THRESHOLD)
+        if (Mathf.Abs(horizontalAxis) < HORIZONTAL_PAUSE_THRESHOLD)
         {
-            int offset = (int)Mathf.Sign(horizontalAxis);
-            if (pinIndex + offset >= -1 && pinIndex + offset < m_lock.PinCount)
-            {
-                pinIndex += offset;
-            }
+            isMovingHorizontally = false;
+            return pinIndex;
         }
+
+        if (isMovingHorizontally || Mathf.Abs(horizontalAxis) < HORIZONTAL_MOVE_THRESHOLD)
+        {
+            return pinIndex;
+        }
+
+        if (depth > IMMOVABLE_DEPTH)
+        {
+            return pinIndex;
+        }
+
+        int offset = (int)Mathf.Sign(horizontalAxis);
+        if (pinIndex + offset >= -1 && pinIndex + offset < m_lock.PinCount)
+        {
+            pinIndex += offset;
+        }
+
+        m_lock.PickIndex = pinIndex;
+
         return pinIndex;
     }
 
@@ -54,6 +73,9 @@ public class Pick : MonoBehaviour
         {
             depth += offset;
         }
+
+        m_lock.PickDepth = depth;
+
         return depth;
     }
 
