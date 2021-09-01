@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class Pick : MonoBehaviour
@@ -18,54 +19,46 @@ public class Pick : MonoBehaviour
 
     private float initialVerticalPosition;
 
+    private Gamepad gamepad;
+
     protected void Awake()
     {
+        gamepad = Gamepad.current;
         initialVerticalPosition = transform.position.y;
     }
-    protected void FixedUpdate()
+    protected void Update()
     {
-        // -1 to +1
-        float horizontalAxis = Input.GetAxis("Horizontal");
-        horizontalAxisText.text = $"horizontal: {horizontalAxis}";
-
-        float verticalAxis = Input.GetAxis("Vertical");
+        bool left = gamepad.dpad.left.wasPressedThisFrame;
+        bool right = gamepad.dpad.right.wasPressedThisFrame;
+        var leftStick = gamepad.leftStick.ReadValue();
+        float verticalAxis = leftStick.y;
+        int pinOffset = left ? -1 : (right ? 1 : 0);
+        horizontalAxisText.text = $"horizontal: {pinOffset}";
         verticalAxisText.text = $"vertical: {verticalAxis}";
 
-        int newPinIndex = UpdatePinIndex(horizontalAxis);
+        int newPinIndex = UpdatePinIndex(pinOffset);
         float pickDepth = UpdateDepth(verticalAxis);
         UpdatePosition(newPinIndex, pickDepth);
     }
 
-    private int UpdatePinIndex(float horizontalAxis)
+    private int UpdatePinIndex(int offset)
     {
-        if (Mathf.Abs(horizontalAxis) < HORIZONTAL_PAUSE_THRESHOLD)
-        {
-            isMovingHorizontally = false;
-            return pinIndex;
-        }
-
-        if (isMovingHorizontally || Mathf.Abs(horizontalAxis) < HORIZONTAL_MOVE_THRESHOLD)
-        {
-            return pinIndex;
-        }
-
         if (depth > IMMOVABLE_DEPTH)
         {
             return pinIndex;
         }
 
-        int offset = (int)Mathf.Sign(horizontalAxis);
-        if (pinIndex + offset >= -1 && pinIndex + offset < m_lock.PinCount)
+        int newIndex = pinIndex + (int)Mathf.Sign(offset);
+        if (newIndex >= -1 && newIndex < m_lock.PinCount)
         {
-            pinIndex += offset;
+            pinIndex = newIndex;
+            m_lock.PickIndex = pinIndex;
         }
-
-        m_lock.PickIndex = pinIndex;
 
         return pinIndex;
     }
 
-    private const float SENSIBILITY = 0.1f;
+    private const float SENSIBILITY = 0.05f;
     private float UpdateDepth(float verticalAxis)
     {
         float offset = -verticalAxis * SENSIBILITY;

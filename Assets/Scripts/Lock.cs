@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Lock : MonoBehaviour
 {
@@ -44,12 +45,15 @@ public class Lock : MonoBehaviour
     private List<Pin> pins;
     private int numLocked = 0;
 
+    private Vibrations vibrations;
+
     protected void Awake()
     {
         lockConfiguration = LockConfiguration.Random();
         Debug.Log("Using LockConfiguration: " + lockConfiguration.ToString());
 
         pins = InitPins();
+        vibrations = InitVibrations();
     }
 
     protected void FixedUpdate()
@@ -78,6 +82,11 @@ public class Lock : MonoBehaviour
         }
 
         return pins;
+    }
+
+    private Vibrations InitVibrations()
+    {
+        return new Vibrations(Gamepad.current);
     }
 
     private void UpdatePickDepths()
@@ -128,6 +137,7 @@ public class Lock : MonoBehaviour
         {
             Debug.Log($"Pin #{PickIndex} is locked");
             pins[PickIndex].isLocked = true;
+            vibrations.Vibrate();
             if (++numLocked == pins.Count)
             {
                 Unlock();
@@ -138,5 +148,6 @@ public class Lock : MonoBehaviour
     private void Unlock()
     {
         Debug.Log("Congratulations!");
+        vibrations.Party();
     }
 }
