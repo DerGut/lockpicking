@@ -20,8 +20,15 @@ public class MoveCamera : MonoBehaviour
         if(moveslowly)
         {
             transform.position = Vector3.Lerp(transform.position, moveToPosition, Time.deltaTime * speed);
-
         }
+
+        if (Input.GetKey("escape"))
+        {
+            print("Escape is hold down");
+            moveslowly = true;
+            moveToPosition = new Vector3(0f, 6f, -8f);
+        }
+
 
         if (Input.GetMouseButtonDown(0)) 
         {
