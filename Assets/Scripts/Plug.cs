@@ -15,9 +15,15 @@ public class Plug : MonoBehaviour
     {
         
     }
-
+    void MovementBehaviour()
+       {
+           float rotationInput = Input.GetAxis("Plug Rotation");
+           (transform).Rotate( Vector3.forward * (Time.deltaTime * rotationInput * 10));
+       } 
+    
     void Update()
     {
+        MovementBehaviour();
         
     }
 }

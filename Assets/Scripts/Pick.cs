@@ -12,12 +12,15 @@ public class Pick : MonoBehaviour
 
     void MovementBehaviour()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        
-        Transform playerPos;
-        (playerPos = transform).Translate(Vector3.forward * (Time.deltaTime * horizontalInput));
-        (playerPos = transform).Translate(Vector3.up * (Time.deltaTime * verticalInput));
+        //float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Pick Vertical");
+        float depthInput = Input.GetAxis("Pick Depth");
+        float rotationInput = Input.GetAxis("Pick Rotation");
+
+        //(transform).Translate(Vector3.right * (Time.deltaTime * horizontalInput));
+        (transform).Translate(Vector3.up * (Time.deltaTime * verticalInput));
+        (transform).Translate(Vector3.forward * (Time.deltaTime * depthInput));
+        (transform).Rotate( Vector3.right * (Time.deltaTime * rotationInput * 10));
     }
     // Update is called once per frame
     void Update()
