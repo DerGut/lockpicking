@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,5 +26,13 @@ public class Plug : MonoBehaviour
     {
         MovementBehaviour();
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Pin"))
+        {
+            Debug.Log("Pin");
+        }
     }
 }

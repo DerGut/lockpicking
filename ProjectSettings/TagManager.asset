@@ -4,12 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - KeyPin
-  - DriverPin
   - Spring
   - Pick
   - Casing
   - Plug
+  - Wall
+  - AboveShearline
+  - BelowShearline
+  - Pin
   layers:
   - Default
   - TransparentFX
