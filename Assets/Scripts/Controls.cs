@@ -14,5 +14,13 @@ public class Controls : MonoBehaviour
     void Update()
     {
         
+        
+        
+        
+    }
+
+    public void onJump()
+    {
+        transform.position = new Vector3(0, 0, 0);
     }
 }
