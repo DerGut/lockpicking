@@ -33,6 +33,15 @@ public class Click : MonoBehaviour
         moveslowly = true;
         moveToPosition = new Vector3(0f, 6f, -8f);
     }
+    public void OnMove(InputValue value)
+    {
+        moveslowly = false;
+        
+        moved = true;
+        var v = value.Get<Vector2>();
+        Debug.Log(v);
+        transform.position = new Vector3(transform.position.x+v.x,  transform.position.y, transform.position.z+v.y);
+    }
 
     public void OnClick()
     {   
@@ -77,12 +86,8 @@ public class Click : MonoBehaviour
                 {
                     Debug.Log("Door5");
                     Application.Quit();
-
                 }
             }
         }
-        //Vector2 inputVec = input.Get<Vector2>();
-        //moveVec = new Vector3(inputVec.x, 0, inputVec.y);
-    }
-        
+    }  
 }
