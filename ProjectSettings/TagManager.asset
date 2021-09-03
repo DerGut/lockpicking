@@ -8,6 +8,8 @@ TagManager:
   - DriverPin
   - Spring
   - Pick
+  - Casing
+  - Plug
   layers:
   - Default
   - TransparentFX

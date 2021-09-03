@@ -310,6 +310,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 58d90a3519ef5d8429dffc2f65cfbde0, type: 2}
+    - target: {fileID: -7946244652993024178, guid: ae7cd040ea71b0940ae29c022bd09263,
+        type: 3}
+      propertyPath: m_TagString
+      value: Casing
+      objectReference: {fileID: 0}
+    - target: {fileID: -7798643923136634523, guid: ae7cd040ea71b0940ae29c022bd09263,
+        type: 3}
+      propertyPath: m_TagString
+      value: DriverPin
+      objectReference: {fileID: 0}
+    - target: {fileID: -6804300121172478505, guid: ae7cd040ea71b0940ae29c022bd09263,
+        type: 3}
+      propertyPath: m_TagString
+      value: DriverPin
+      objectReference: {fileID: 0}
     - target: {fileID: -5989510790611342866, guid: ae7cd040ea71b0940ae29c022bd09263,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -325,16 +340,31 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a33baf3c01062c340a2fdf1596f5070b, type: 2}
+    - target: {fileID: -2364599114896512929, guid: ae7cd040ea71b0940ae29c022bd09263,
+        type: 3}
+      propertyPath: m_TagString
+      value: KeyPin
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ae7cd040ea71b0940ae29c022bd09263,
         type: 3}
       propertyPath: m_Name
       value: PinTumblerHalfPinned
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686926874750643286, guid: ae7cd040ea71b0940ae29c022bd09263,
+        type: 3}
+      propertyPath: m_TagString
+      value: KeyPin
       objectReference: {fileID: 0}
     - target: {fileID: 2564161670523556856, guid: ae7cd040ea71b0940ae29c022bd09263,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 58d90a3519ef5d8429dffc2f65cfbde0, type: 2}
+    - target: {fileID: 6851099923480767336, guid: ae7cd040ea71b0940ae29c022bd09263,
+        type: 3}
+      propertyPath: m_TagString
+      value: Plug
+      objectReference: {fileID: 0}
     - target: {fileID: 7370449964159807542, guid: ae7cd040ea71b0940ae29c022bd09263,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
