@@ -2,25 +2,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Plug : MonoBehaviour
 {
+    private PlayerInputHandler _playerInput;
     private float _radius;
     private float _rotation; //[0,360]
     private float _spacing;
-
+    //key hole shape
+    
     public float Radius => _radius;
 
-    //key hole shape
+    private void Awake()
+    {
+        _playerInput = new PlayerInputHandler();
+    }
+
+    private void OnEnable()
+    {
+        _playerInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.Disable();
+    }
+    
     void Start()
     {
         
     }
     void MovementBehaviour()
-       {
-           float rotationInput = Input.GetAxis("Plug Rotation");
-           (transform).Rotate( Vector3.forward * (Time.deltaTime * rotationInput * 10));
-       } 
+    
+    {
+        var rotationInput = _playerInput.LockPicking.PlugRotation.ReadValue<float>();
+        transform.Rotate( Vector3.forward * (Time.deltaTime * rotationInput));
+    } 
     
     void Update()
     {

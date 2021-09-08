@@ -5,49 +5,57 @@ using UnityEngine;
 
 public class Pick : MonoBehaviour
 {
-    private float drive = 1.0f;
+    [SerializeField] private PlayerInputHandler _playerInput;
+    private float _drive = 1.0f;
+
+    private void Awake()
+    {
+        _playerInput = new PlayerInputHandler();
+    }
+
+    private void OnEnable()
+    {
+        _playerInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.Disable();
+    }
+
     void Start()
     {
-        
     }
+
 
     void MovementBehaviour()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Pick Vertical");
-        float depthInput = Input.GetAxis("Pick Depth");
-        float vRotationInput = Input.GetAxis("Pick Vertical Rotation");
-        float hRotationInput = Input.GetAxis("Pick Horizontal Rotation");
+        var pickXY = _playerInput.LockPicking.PickXY.ReadValue<Vector2>();
+        var pickZ = _playerInput.LockPicking.PickZ.ReadValue<float>();
+        var pickRot = _playerInput.LockPicking.PickRotation.ReadValue<Vector2>();
 
-        (transform).Translate(Vector3.right * (Time.deltaTime * horizontalInput * drive));
-        (transform).Translate(Vector3.up * (Time.deltaTime * verticalInput * drive));
-        (transform).Translate(Vector3.forward * (Time.deltaTime * depthInput * drive));
-        (transform).Rotate( Vector3.right * (Time.deltaTime * vRotationInput * drive * 10));
-        (transform).Rotate( Vector3.forward * (Time.deltaTime * hRotationInput * drive * 10));
+        transform.Translate(new Vector3(pickXY.x, pickXY.y, 0) * (Time.deltaTime * _drive));
+        transform.Translate(Vector3.forward * (Time.deltaTime * pickZ * _drive));
+        transform.Rotate(new Vector3(pickRot.y, 0, pickRot.x) * (Time.deltaTime * _drive));
     }
+
     // Update is called once per frame
     void Update()
     {
-        
         MovementBehaviour();
-        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Wall"))
-        {
-            drive = -1.0f;
-            Debug.Log("Hit a Wall");
-        }
+        if (!other.CompareTag("Wall")) return;
+        //_drive = -1.0f;
+        Debug.Log("Hit a Wall");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Wall"))
-        {
-            drive = 1.0f;
-            Debug.Log("Exited a Wall");
-        }
+        if (!other.CompareTag("Wall")) return;
+        //_drive = 1.0f;
+        Debug.Log("Exited a Wall");
     }
 }
