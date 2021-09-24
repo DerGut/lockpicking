@@ -221,7 +221,7 @@ public class @PlayerInputHandler : IInputActionCollection, IDisposable
                     ""id"": ""2de20384-1e62-4aec-bd03-f2423d6c4efa"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""InvertVector2,ScaleVector2(x=15,y=15)"",
+                    ""processors"": ""InvertVector2"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""PickRotation"",
                     ""isComposite"": false,

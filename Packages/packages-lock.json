@@ -44,7 +44,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.entities": {
-      "version": "0.17.0-preview.41",
+      "version": "0.17.0-preview.42",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -136,7 +136,7 @@
     },
     "com.unity.physics": {
       "version": "0.6.0-preview.3",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.4.1",
@@ -184,6 +184,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.rendering.hybrid": {
+      "version": "0.11.0-preview.44",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.entities": "0.17.0-preview.42"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.scriptablebuildpipeline": {
       "version": "1.9.0",
       "depth": 2,
@@ -217,7 +226,7 @@
     },
     "com.unity.test-framework.performance": {
       "version": "2.3.1-preview",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.0",

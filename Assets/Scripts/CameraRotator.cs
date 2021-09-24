@@ -29,7 +29,7 @@ public class CameraRotator : MonoBehaviour
     void MovementBehaviour()
     {
         var cameraRot = _playerInput.Camera.CameraControl.ReadValue<Vector2>();
-        transform.Rotate(new Vector3(0, cameraRot.x, cameraRot.y) * (Time.deltaTime));
+        transform.Rotate(new Vector3(cameraRot.y, cameraRot.x,0) * (Time.deltaTime));
     }
 
     // Update is called once per frame
