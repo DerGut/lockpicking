@@ -369,7 +369,7 @@ public class @PlayerInputHandler : IInputActionCollection, IDisposable
                     ""id"": ""a7776bce-c650-427a-b74b-b71cb527e031"",
                     ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=25,y=25),InvertVector2"",
+                    ""processors"": ""ScaleVector2(x=25,y=25),InvertVector2(invertY=false)"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""CameraControl"",
                     ""isComposite"": false,
