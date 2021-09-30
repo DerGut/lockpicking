@@ -85,9 +85,15 @@ Most lockpicking minigames don't even get the basic mechanics of locks right. It
 7. A mechanism that keeps pins in place when they were binding and have been pushed upwards by the pick
 8. A random binding order from lock to lock
 
+A showcase of an early version:
+![](examples/rotating_plug.gif)
+
 ### Physics
 
-In principle, most of the features could have been implemented on a purely logical basis. By taking the pick position, scaling the spring and moving the pins along the z-axis. However, lockpicking can be very nuanced in that slight variations of alignments and pressures can have a very different feel. We wanted to incorporate these nuaces into our game. Also, having such a powerful game engine as the one Unity provides at our finger tips was a temptation that was to resist.
+In principle, most of the features could have been implemented on a purely logical basis. By taking the pick position, scaling the spring and moving the pins along the z-axis. However, lockpicking can be very nuanced in that slight variations of alignments and pressures can have a very different feel. We wanted to incorporate these nuances into our game. Also, having such a powerful game engine as the one Unity provides at our finger tips was a temptation that was hard to resist.
+
+An early prototype of our physics-based pin stack implementation:
+![An early prototype of our physics-based pin stack implementation](examples/pin_physics.gif)
 
 ### Rumble
 
@@ -105,7 +111,7 @@ As it turns out, rumble functionalities across game pads are not as standardized
 
 ### Physics Engine
 
-We created the 3D model of the lock in Blender and later assigned rigid bodies to its parts. This worked fine until we stumbled upon another issue: The current physics engine of Unity does not support non-kinematic, non-convex meshes. Because the model of the plug needs to be both non-kinematic (it needs to be rotated by exerting rotational a force) and non-convex (the carving where the key is inserted), it could not be simulated by using physics.
+We created the 3D model of the lock in Blender and later assigned rigid bodies to its parts. This worked fine until we stumbled upon another issue: The current physics engine of Unity does not support non-kinematic, non-convex meshes. Because the model of the plug needs to be both non-kinematic (it needs to be rotated by exerting a rotational force) and non-convex (the carving where the key is inserted is concarve), it could not be simulated by using physics.
 
 We evaluated two workarounds:
 
@@ -120,10 +126,21 @@ Unfortunately, this decision came with a major drawback. The Havok preview packe
 
 ### Entity Component System
 
-The next step was to migrate our project to the new system. We had to relearn the ways objects in Unity interact under this new paradigm. Also, along with the switch to Havok, we had to update our Unity project version from 2019 to 2020 in order to benefit from newer and more stable preview versions. This however led to the next problem: missing packages.
+The next step was to migrate our project to the new system. We had to relearn the ways objects in Unity interact under this new paradigm. On the other hand, we managed to improve our collision detection:
+![](examples/collision.gif)
+
+Nevertheless, the switch to ECS was painful as the API is much less stable and less documentation exists. Due to the lack of interaction in the inspector, the development experience was also heavily degraded compared to the OOP workflow.
+
+Also, along with the switch to Havok, we had to update our Unity project version from 2019 to 2020 in order to benefit from newer and more stable preview versions. This however led to the next problem: missing packages.
 
 ### Missing Preview Packages in Unity 2020
 
 Because of [changes to the way preview packages are handled in the package manager](https://medium.com/@jeffreymlynch/where-are-the-missing-preview-packages-in-unity-2020-3ad0935e4193) in Unity v2020, some preview packages (such as the [Hybrid Renderer](https://docs.unity3d.com/Packages/com.unity.rendering.hybrid@0.11/manual/index.html)) had been removed from the package manager.
 
 This took us a while to troubleshoot and we could only find the problem after watching some transforms in the entitity debugger.
+
+All in all we ran into time pressure and ultimately couldn't finish the project. Our final version using ECS can be seen here:
+![](examples/final.gif)
+
+And a more polished version of the model in Blender here:
+![](examples/model.jpg)
