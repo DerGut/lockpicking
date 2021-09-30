@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Spring
+  - Pick
+  - Casing
+  - Plug
+  - Wall
+  - AboveShearline
+  - BelowShearline
+  - Pin
   layers:
   - Default
   - TransparentFX
