@@ -33,7 +33,7 @@ Unfortunately we ran out of time due to a number of problems that made this game
 
 ### Anatomy of a Lock
 
-A typical pin-tumbler lock consists of a cylinder(the green part in the picture below) and a plug (the yellow part). The cylinder acts as the casing, holding the inner workings of the lock. The plug is the part where the key gets inserted into. If the key is the correct key fitted for the lock, it can be turned, rotating the plug within the cylinder. The rotating motion of the plug then moves a bolt (not depicted in the image) which unlocks the door.
+A typical pin-tumbler lock consists of a cylinder (the green part in the picture below) and a plug (the yellow part). The cylinder acts as the casing, holding the inner workings of the lock. The plug is the part where the key gets inserted into. If the key is the correct key fitted for the lock, it can be turned, rotating the plug within the cylinder. The rotating motion of the plug then moves a bolt (not depicted in the image) which unlocks the door.
 ![](http://www.lockwiki.com/images/6/68/Pin_tumbler_no_key.jpg)
 
 Pin chambers have been drilled through the cylinder and plug which contain springs, driver pins (the blue parts) and key pins (the red parts). In the default position, the springs push the pins down. The line at which the pin chambers in the cylinder and pin chambers in the plug are touching, is called the _shear line_. In the default position of the lock, the driver pins cover this line which prevents the plug from rotating.
